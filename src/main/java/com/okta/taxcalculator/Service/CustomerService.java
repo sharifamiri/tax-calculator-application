@@ -35,7 +35,7 @@ public class CustomerService {
         customerDao.deleteCustomer(id);
     }
 
-    public String updateCustomer(String id, String name, String filingStatus){
-        return customerDao.updateCustomer(id, name, filingStatus);
+    public String updateCustomer(Customer customer){
+        return customerDao.updateCustomer(customer);
     }
 }

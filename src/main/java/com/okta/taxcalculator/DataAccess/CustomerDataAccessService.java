@@ -99,13 +99,13 @@ public class CustomerDataAccessService implements CustomerDao {
     }
 
     @Override
-    public String updateCustomer(String id, String name, String filingStatus) {
+    public String updateCustomer(Customer customer) {
 
-        UpdateItemSpec updateItemSpec = new UpdateItemSpec().withPrimaryKey("Id", 120)
+        UpdateItemSpec updateItemSpec = new UpdateItemSpec().withPrimaryKey("id", customer.getId().toString())
                 .withUpdateExpression("add #a :val1 set #na=:val2")
                 .withNameMap(new NameMap().with("#a", "name").with("#na", "filingStatus"))
                 .withValueMap(
-                        new ValueMap().withStringSet(":val1", "Author YY").withString(":val2", "someValue"))
+                        new ValueMap().withStringSet(":val1", customer.getName().toString()).withString(":val2", customer.getFilingStatus().toString()))
                 .withReturnValues(ReturnValue.ALL_NEW);
 
         UpdateItemOutcome outcome = table.updateItem(updateItemSpec);
