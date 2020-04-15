@@ -15,7 +15,7 @@ public interface CustomerDao {
 //        return insertCustomer(id, customer, taxAmount);
 //    }
 
-    int insertCustomer(Customer customer);
+    String insertCustomer(Customer customer);
 
     List<String> selectAllCustomers(String id);
 
@@ -23,5 +23,5 @@ public interface CustomerDao {
 
     void deleteCustomer(String id);
 
-    String updateCustomer(Customer customer);
+    String updateCustomer(String id, Customer customer);
 }

@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 
-@RequestMapping("api/tax")
+@RequestMapping("api/taxdata")
 @RestController
 public class CustomerController {
 
@@ -25,8 +25,8 @@ public class CustomerController {
     }
 
     @PostMapping
-    public void addCustomer(@Valid @NonNull @RequestBody Customer customer){
-        customerService.addCustomer(customer);
+    public String  addCustomer(@Valid @NonNull @RequestBody Customer customer){
+        return customerService.addCustomer(customer);
 //        mapper.save(customerService);
     }
 
@@ -47,7 +47,6 @@ public class CustomerController {
 
     @PutMapping(path = "{id}")
     public String updateCustomer(@PathVariable("id") String id, @RequestBody Customer customer){
-//        Customer customer = new Customer();
-        return customerService.updateCustomer(customer);
+        return customerService.updateCustomer(id, customer);
     }
 }

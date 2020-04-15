@@ -15,12 +15,12 @@ public class CustomerService {
     private CustomerDao customerDao;
 
     @Autowired
-    public CustomerService(@Qualifier("fakeDao") CustomerDao customerDao){
+    public CustomerService(@Qualifier("dynamodb") CustomerDao customerDao){
         this.customerDao = customerDao;
     }
 
-    public int addCustomer(Customer customer){
-        return customerDao.insertCustomer(customer);
+    public String addCustomer(Customer customer){
+       return customerDao.insertCustomer(customer);
     }
 
     public List<String> getAllCustomers(String id){
@@ -35,7 +35,7 @@ public class CustomerService {
         customerDao.deleteCustomer(id);
     }
 
-    public String updateCustomer(Customer customer){
-        return customerDao.updateCustomer(customer);
+    public String updateCustomer(String id, Customer customer){
+        return customerDao.updateCustomer(id, customer);
     }
 }
