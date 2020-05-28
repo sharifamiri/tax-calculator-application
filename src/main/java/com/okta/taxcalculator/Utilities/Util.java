@@ -1,6 +1,8 @@
-package com.okta.taxcalculator.Entity;
+package com.okta.taxcalculator.Utilities;
 
-public class Utilities {
+import com.okta.taxcalculator.Entity.Customer;
+
+public class Util {
 
 //        private final AmazonDynamoDB cli = AmazonDynamoDBClientBuilder.defaultClient();
 //        public DynamoDBMapper map = new DynamoDBMapper(cli);
@@ -87,4 +89,5 @@ public class Utilities {
 //        Iterator<ScanResult> iterator = result.iterator();
 //        System.out.println(result.getItems());
     }
+
 }

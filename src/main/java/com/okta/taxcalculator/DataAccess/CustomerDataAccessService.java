@@ -68,15 +68,19 @@ public class CustomerDataAccessService implements CustomerDao {
     @Override
     public String updateCustomer(String id, Customer customer) {
 
-        UpdateItemSpec updateItemSpec = new UpdateItemSpec().withPrimaryKey("id", customer.getId().toString())
-                .withUpdateExpression("add #a :val1 set #na=:val2")
-                .withNameMap(new NameMap().with("#a", "name").with("#na", "filingStatus"))
-                .withValueMap(
-                        new ValueMap().withStringSet(":val1", customer.getName().toString()).withString(":val2", customer.getFilingStatus().toString()))
-                .withReturnValues(ReturnValue.ALL_NEW);
+        try {
+            UpdateItemSpec updateItemSpec = new UpdateItemSpec().withPrimaryKey("id", "d4199e68-a82c-4fa6-a464-c315780729f2")
+                    .withUpdateExpression("add #a :val1 set #na=:val2")
+                    .withNameMap(new NameMap().with("#a", "name").with("#na", "filingStatus"))
+                    .withValueMap(
+                            new ValueMap().withStringSet(":val1", customer.getName().toString()).withString(":val2", customer.getFilingStatus().toString()))
+                    .withReturnValues(ReturnValue.ALL_NEW);
 
-        UpdateItemOutcome outcome = table.updateItem(updateItemSpec);
-        return outcome.getItem().toJSONPretty();
+            UpdateItemOutcome outcome = table.updateItem(updateItemSpec);
+            return outcome.getItem().toJSONPretty();
+        }catch (Exception e){
+            return e.getMessage();
+        }
     }
 
 }

@@ -1,12 +1,9 @@
-package com.okta.taxcalculator.Entity;
+package com.okta.taxcalculator.Utilities;
 
 import java.util.HashMap;
 
-public class Calculator {
+public class Utilities {
 
-    private String filingStatus;
-    private Double grossIncome;
-    private Double taxableIncome;
     private Double taxAmount;
 
     private double bracket1Rate = 0.10;
@@ -17,34 +14,9 @@ public class Calculator {
     private double bracket6Rate = 0.35;
     private double bracket7Rate = 0.37;
 
-    public Calculator(String filingStatus, Double grossIncome) {
-        this.filingStatus = filingStatus;
-        this.grossIncome = grossIncome;
-    }
-
-    public Double taxAmountCalc(){
-
-        HashMap<String, Integer> brackets = new HashMap<>();
-
-        if(filingStatus.equals("Single")) {
-
-            Integer singleStandardDeduction = 12200;
-            if(grossIncome<singleStandardDeduction) return 0.0;
-            taxableIncome = grossIncome - singleStandardDeduction;
-
-            brackets.put("bracket1Amt", 0);
-            brackets.put("bracket2Amt", 9700);
-            brackets.put("bracket3Amt", 39475);
-            brackets.put("bracket4Amt", 84200);
-            brackets.put("bracket5Amt", 160275);
-            brackets.put("bracket6Amt", 204100);
-            brackets.put("bracket7Amt", 510300);
-        }
-            return calculation(brackets);
-    }
-
     public Double calculation(HashMap<String, Integer> brackets){
 
+        Double taxableIncome = 0.0;
         if(taxableIncome >= brackets.get("bracket1Amt") && taxableIncome <= brackets.get("bracket2Amt")){
             taxAmount = taxableIncome * bracket1Rate;
         }
@@ -90,4 +62,16 @@ public class Calculator {
         return taxAmount;
     }
 
+    //    public Customer(String id, String name, String filingStatus, Double grossIncome, Double taxAmount) {
+//        this.id = id;
+//        this.name = name;
+//        this.filingStatus = filingStatus;
+//        this.grossIncome = grossIncome;
+//        this.taxAmount = taxAmount;
+//    }
+
+//    public void setId() {
+//        UUID id = UUID.randomUUID();
+//        this.id = id;
+//    }
 }

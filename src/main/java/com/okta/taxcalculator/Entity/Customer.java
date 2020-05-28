@@ -18,19 +18,6 @@ public class Customer {
     public Customer() {
     }
 
-    //    public Customer(String id, String name, String filingStatus, Double grossIncome, Double taxAmount) {
-//        this.id = id;
-//        this.name = name;
-//        this.filingStatus = filingStatus;
-//        this.grossIncome = grossIncome;
-//        this.taxAmount = taxAmount;
-//    }
-
-//    public void setId() {
-//        UUID id = UUID.randomUUID();
-//        this.id = id;
-//    }
-
     @DynamoDBHashKey(attributeName = "id")
     public String getId() {
         id = ""+UUID.randomUUID();
@@ -53,16 +40,10 @@ public class Customer {
         return Double.valueOf(Math.round(grossIncome));
     }
 
-//    public void setTaxAmount(Double taxAmount) {
-//        Calculator calculator = new Calculator(filingStatus, grossIncome);
-//        taxAmount = calculator.taxAmount();
-//        this.taxAmount = taxAmount;
-//    }
-
     @DynamoDBAttribute(attributeName = "taxAmount")
     public Double getTaxAmount(){
         Calculator calculator = new Calculator(filingStatus, grossIncome);
-        taxAmount = calculator.taxAmount();
+        taxAmount = calculator.taxAmountCalc();
         return Double.valueOf(Math.round(taxAmount));
     }
 
