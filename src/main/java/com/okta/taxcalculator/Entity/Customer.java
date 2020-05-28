@@ -25,7 +25,6 @@ public class Customer {
     }
 
     @DynamoDBAttribute(attributeName = "name")
-//    @DynamoDBRangeKey(attributeName = "name")
     public String getName() {
         return name;
     }

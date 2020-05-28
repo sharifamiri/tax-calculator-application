@@ -6,15 +6,6 @@ import java.util.List;
 
 public interface CustomerDao {
 
-//    int insertCustomer(UUID id, Customer customer, Double taxAmount);
-
-//    default int insertCustomer(Customer customer){
-//        UUID id = UUID.randomUUID();
-//        Calculator calculator = new Calculator(customer.getFilingStatus(),customer.getGrossIncome());
-//        Double taxAmount = calculator.taxAmount();
-//        return insertCustomer(id, customer, taxAmount);
-//    }
-
     String insertCustomer(Customer customer);
 
     List<String> selectAllCustomers(String id);

@@ -62,7 +62,6 @@ public class CustomerDataAccessService implements CustomerDao {
 
         DeleteItemSpec deleteItemSpec = new DeleteItemSpec().withPrimaryKey("id", id);
         DeleteItemOutcome outcome = table.deleteItem(deleteItemSpec);
-
     }
 
     @Override
