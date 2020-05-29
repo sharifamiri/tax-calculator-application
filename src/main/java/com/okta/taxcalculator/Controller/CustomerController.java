@@ -31,8 +31,8 @@ public class CustomerController {
     }
 
     @GetMapping
-    public List<String> getAllCustomers(String id){
-        return customerService.getAllCustomers(id);
+    public List<Customer> getAllCustomers(){
+        return customerService.getAllCustomers();
     }
 
     @GetMapping(path = "{id}")

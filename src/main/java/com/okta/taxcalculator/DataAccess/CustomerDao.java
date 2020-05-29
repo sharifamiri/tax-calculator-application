@@ -17,7 +17,7 @@ public interface CustomerDao {
 
     String insertCustomer(Customer customer);
 
-    List<String> selectAllCustomers(String id);
+    List<Customer> selectAllCustomers();
 
     String selectCustomerById(String id);
 

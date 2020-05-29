@@ -23,8 +23,8 @@ public class CustomerService {
        return customerDao.insertCustomer(customer);
     }
 
-    public List<String> getAllCustomers(String id){
-        return customerDao.selectAllCustomers(id);
+    public List<Customer> getAllCustomers(){
+        return customerDao.selectAllCustomers();
     }
 
     public String getCustomerById(String id){
@@ -36,6 +36,7 @@ public class CustomerService {
     }
 
     public String updateCustomer(String id, Customer customer){
+
         return customerDao.updateCustomer(id, customer);
     }
 }
