@@ -97,42 +97,42 @@ public class TaxService {
             taxAmount = taxableIncome * bracket1Rate;
         }
         if(taxableIncome >= brackets.get("bracket2Amt") +1 && taxableIncome <= brackets.get("bracket3Amt")){
-            taxAmount = (brackets.get("bracket1Amt") * bracket1Rate)
+            taxAmount = (brackets.get("bracket2Amt") * bracket1Rate)
                     + ((taxableIncome- brackets.get("bracket2Amt"))* bracket2Rate);
         }
         if(taxableIncome >= brackets.get("bracket3Amt") +1 && taxableIncome <= brackets.get("bracket4Amt")){
-            taxAmount = (brackets.get("bracket1Amt") * bracket1Rate)
-                    + (brackets.get("bracket2Amt") * bracket2Rate)
+            taxAmount = (brackets.get("bracket2Amt") * bracket1Rate)
+                    + ((brackets.get("bracket3Amt") - brackets.get("bracket2Amt")) * bracket2Rate)
                     + ((taxableIncome- brackets.get("bracket3Amt"))* bracket3Rate);
         }
         if(taxableIncome >= brackets.get("bracket4Amt") +1 && taxableIncome <= brackets.get("bracket5Amt")){
-            taxAmount = (brackets.get("bracket1Amt") * bracket1Rate)
-                    + (brackets.get("bracket2Amt") * bracket2Rate)
-                    + (brackets.get("bracket3Amt") * bracket3Rate)
+            taxAmount = (brackets.get("bracket2Amt") * bracket1Rate)
+                    + ((brackets.get("bracket3Amt") - brackets.get("bracket2Amt")) * bracket2Rate)
+                    + ((brackets.get("bracket4Amt") - brackets.get("bracket3Amt")) * bracket3Rate)
                     + ((taxableIncome- brackets.get("bracket4Amt"))* bracket4Rate);
         }
         if(taxableIncome >= brackets.get("bracket5Amt") +1 && taxableIncome <= brackets.get("bracket6Amt")){
-            taxAmount = (brackets.get("bracket1Amt") * bracket1Rate)
-                    + (brackets.get("bracket2Amt") * bracket2Rate)
-                    + (brackets.get("bracket3Amt") * bracket3Rate)
-                    + (brackets.get("bracket4Amt") * bracket4Rate)
+            taxAmount = (brackets.get("bracket2Amt") * bracket1Rate)
+                    + ((brackets.get("bracket3Amt") - brackets.get("bracket2Amt")) * bracket2Rate)
+                    + ((brackets.get("bracket4Amt") - brackets.get("bracket3Amt")) * bracket3Rate)
+                    + ((brackets.get("bracket5Amt") - brackets.get("bracket4Amt")) * bracket4Rate)
                     + ((taxableIncome- brackets.get("bracket5Amt"))* bracket5Rate);
         }
         if(taxableIncome >= brackets.get("bracket6Amt") +1 && taxableIncome <= brackets.get("bracket7Amt")){
-            taxAmount = (brackets.get("bracket1Amt") * bracket1Rate)
-                    + (brackets.get("bracket2Amt") * bracket2Rate)
-                    + (brackets.get("bracket3Amt") * bracket3Rate)
-                    + (brackets.get("bracket4Amt") * bracket4Rate)
-                    + (brackets.get("bracket5Amt") * bracket5Rate)
+            taxAmount = (brackets.get("bracket2Amt") * bracket1Rate)
+                    + ((brackets.get("bracket3Amt") - brackets.get("bracket2Amt")) * bracket2Rate)
+                    + ((brackets.get("bracket4Amt") - brackets.get("bracket3Amt")) * bracket3Rate)
+                    + ((brackets.get("bracket5Amt") - brackets.get("bracket4Amt")) * bracket4Rate)
+                    + ((brackets.get("bracket6Amt") - brackets.get("bracket5Amt")) * bracket5Rate)
                     + ((taxableIncome- brackets.get("bracket6Amt"))* bracket6Rate);
         }
         if(taxableIncome >= brackets.get("bracket7Amt") +1){
-            taxAmount = (brackets.get("bracket1Amt") * bracket1Rate)
-                    + (brackets.get("bracket2Amt") * bracket2Rate)
-                    + (brackets.get("bracket3Amt") * bracket3Rate)
-                    + (brackets.get("bracket4Amt") * bracket4Rate)
-                    + (brackets.get("bracket5Amt") * bracket5Rate)
-                    + (brackets.get("bracket6Amt") * bracket6Rate)
+            taxAmount = (brackets.get("bracket2Amt") * bracket1Rate)
+                    + ((brackets.get("bracket3Amt") - brackets.get("bracket2Amt")) * bracket2Rate)
+                    + ((brackets.get("bracket4Amt") - brackets.get("bracket3Amt")) * bracket3Rate)
+                    + ((brackets.get("bracket5Amt") - brackets.get("bracket4Amt")) * bracket4Rate)
+                    + ((brackets.get("bracket6Amt") - brackets.get("bracket5Amt")) * bracket5Rate)
+                    + ((brackets.get("bracket7Amt") - brackets.get("bracket6Amt")) * bracket6Rate)
                     + ((taxableIncome- brackets.get("bracket7Amt"))* bracket7Rate);
         }
         return taxAmount;
