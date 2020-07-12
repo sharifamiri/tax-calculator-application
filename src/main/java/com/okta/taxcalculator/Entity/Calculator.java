@@ -29,8 +29,20 @@ public class Calculator {
         if(filingStatus.equals("Single")) {
 
             Integer singleStandardDeduction = 12200;
-            if(grossIncome<singleStandardDeduction) return 0.0;
+            if(grossIncome < singleStandardDeduction) return 0.0;
             taxableIncome = grossIncome - singleStandardDeduction;
+
+            brackets.put("bracket1Amt", 0);
+            brackets.put("bracket2Amt", 9700);
+            brackets.put("bracket3Amt", 39475);
+            brackets.put("bracket4Amt", 84200);
+            brackets.put("bracket5Amt", 160275);
+            brackets.put("bracket6Amt", 204100);
+            brackets.put("bracket7Amt", 510300);
+        }else if (filingStatus.equals("Married")) {
+            int marriedStandardDeduction = 19400;
+            if(grossIncome < marriedStandardDeduction) return 0.0;
+            taxableIncome = grossIncome - marriedStandardDeduction;
 
             brackets.put("bracket1Amt", 0);
             brackets.put("bracket2Amt", 9700);
