@@ -21,7 +21,7 @@ import java.util.Map;
 @Repository("dynamodb")
 public class CustomerDataAccessService implements CustomerDao {
 
-    static AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().build();
+    static AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().withRegion("us-west-2").build();
     static DynamoDB dynamoDB = new DynamoDB(client);
     static String tableName = "TaxAmountTable";
     static Table table = dynamoDB.getTable(tableName);
@@ -65,10 +65,10 @@ public class CustomerDataAccessService implements CustomerDao {
     }
 
     @Override
-    public String updateCustomer(String id, Customer customer) {
+    public String updateCustomer(Customer customer) {
 
         try {
-            UpdateItemSpec updateItemSpec = new UpdateItemSpec().withPrimaryKey("id", "d4199e68-a82c-4fa6-a464-c315780729f2")
+            UpdateItemSpec updateItemSpec = new UpdateItemSpec().withPrimaryKey("id", customer.getId())
                     .withUpdateExpression("add #a :val1 set #na=:val2")
                     .withNameMap(new NameMap().with("#a", "name").with("#na", "filingStatus"))
                     .withValueMap(

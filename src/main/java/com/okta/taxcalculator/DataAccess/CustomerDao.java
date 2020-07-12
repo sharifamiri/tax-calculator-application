@@ -14,5 +14,5 @@ public interface CustomerDao {
 
     void deleteCustomer(String id);
 
-    String updateCustomer(String id, Customer customer);
+    String updateCustomer(Customer customer);
 }
