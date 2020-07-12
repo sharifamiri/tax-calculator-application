@@ -1,13 +1,22 @@
-package com.okta.taxcalculator.Entity;
+package com.okta.taxcalculator.Service;
+
+import com.okta.taxcalculator.DataAccess.TaxCalculationDao;
+import com.okta.taxcalculator.Entity.CustomerAccount;
+import com.okta.taxcalculator.Entity.TaxCalculations;
+import com.okta.taxcalculator.Enum.FilingStatus;
+import com.okta.taxcalculator.to.TaxCalculateRequest;
+import com.okta.taxcalculator.to.TaxCalculateResponse;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 
-public class Calculator {
-
-    private String filingStatus;
-    private Double grossIncome;
-    private Double taxableIncome;
-    private Double taxAmount;
+@Component
+@AllArgsConstructor
+@NoArgsConstructor
+public class TaxService {
 
     private double bracket1Rate = 0.10;
     private double bracket2Rate = 0.12;
@@ -17,20 +26,58 @@ public class Calculator {
     private double bracket6Rate = 0.35;
     private double bracket7Rate = 0.37;
 
-    public Calculator(String filingStatus, Double grossIncome) {
-        this.filingStatus = filingStatus;
-        this.grossIncome = grossIncome;
+    private final TaxCalculationDao taxCalculationDao;
+    private final CustomerService customerService;
+
+    public TaxService(@Qualifier("dynamodb")TaxCalculationDao taxCalculationDao, CustomerService customerService) {
+        this.taxCalculationDao = taxCalculationDao;
+        this.customerService = customerService;
     }
 
-    public Double taxAmountCalc(){
+    public TaxCalculateResponse calculateTax(TaxCalculateRequest request) throws Exception {
 
+        CustomerAccount customerAccount = customerService.getCustomerAccountById(request.getAccountId());
+        double taxAmount = taxAmountCalc(request, FilingStatus.valueOf(customerAccount.getFilingStatus()));
+        TaxCalculations taxCalculations = buildTaxCalculations(request, taxAmount);
+        taxCalculationDao.insertTax(taxCalculations);
+
+        TaxCalculateResponse response = new TaxCalculateResponse();
+        response.setTaxAmount(taxAmount);
+        response.setGrossIncome(request.getGrossIncome());
+        return response;
+    }
+
+    private TaxCalculations buildTaxCalculations(TaxCalculateRequest request, double taxAmount) {
+        TaxCalculations taxCalculations = new TaxCalculations();
+        taxCalculations.setCustomerId(request.getAccountId());
+        taxCalculations.setGrossIncome(request.getGrossIncome());
+        taxCalculations.setCalculatedTaxAmount(taxAmount);
+        return taxCalculations;
+    }
+
+    private double taxAmountCalc(TaxCalculateRequest request, FilingStatus filingStatus){
+
+        double taxableIncome = 0.0;
         HashMap<String, Integer> brackets = new HashMap<>();
 
-        if(filingStatus.equals("Single")) {
+        if(filingStatus.equals(FilingStatus.SINGLE)) {
 
-            Integer singleStandardDeduction = 12200;
-            if(grossIncome<singleStandardDeduction) return 0.0;
-            taxableIncome = grossIncome - singleStandardDeduction;
+            int singleStandardDeduction = 12200;
+            if(request.getGrossIncome() < singleStandardDeduction) return 0.0;
+            taxableIncome = request.getGrossIncome() - singleStandardDeduction;
+
+            brackets.put("bracket1Amt", 0);
+            brackets.put("bracket2Amt", 9700);
+            brackets.put("bracket3Amt", 39475);
+            brackets.put("bracket4Amt", 84200);
+            brackets.put("bracket5Amt", 160275);
+            brackets.put("bracket6Amt", 204100);
+            brackets.put("bracket7Amt", 510300);
+
+        } else if (filingStatus.equals(FilingStatus.MARRIED)) {
+            int singleStandardDeduction = 12200;
+            if(request.getGrossIncome() < singleStandardDeduction) return 0.0;
+            taxableIncome = request.getGrossIncome() - singleStandardDeduction;
 
             brackets.put("bracket1Amt", 0);
             brackets.put("bracket2Amt", 9700);
@@ -40,11 +87,12 @@ public class Calculator {
             brackets.put("bracket6Amt", 204100);
             brackets.put("bracket7Amt", 510300);
         }
-            return calculation(brackets);
+       return calculation(brackets, taxableIncome);
     }
 
-    public Double calculation(HashMap<String, Integer> brackets){
+    private Double calculation(HashMap<String, Integer> brackets, double taxableIncome){
 
+        double taxAmount = 0.0;
         if(taxableIncome >= brackets.get("bracket1Amt") && taxableIncome <= brackets.get("bracket2Amt")){
             taxAmount = taxableIncome * bracket1Rate;
         }
@@ -89,5 +137,4 @@ public class Calculator {
         }
         return taxAmount;
     }
-
 }

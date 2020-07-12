@@ -1,15 +1,20 @@
 package com.okta.taxcalculator.Service;
 
 import com.okta.taxcalculator.DataAccess.CustomerDao;
-import com.okta.taxcalculator.Entity.Customer;
+import com.okta.taxcalculator.Entity.CustomerAccount;
+import com.okta.taxcalculator.to.CreateCustomerResponse;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Service
-//@DynamoDBTable(tableName = "TaxTable")
+@Component
 public class CustomerService {
 
     private CustomerDao customerDao;
@@ -19,15 +24,25 @@ public class CustomerService {
         this.customerDao = customerDao;
     }
 
-    public String addCustomer(Customer customer){
-       return customerDao.insertCustomer(customer);
+    public String addCustomer(CustomerAccount customerAccount){
+       return customerDao.insertCustomer(customerAccount);
     }
 
-    public List<String> getAllCustomers(String id){
-        return customerDao.selectAllCustomers(id);
+    public List<CreateCustomerResponse> getAllCustomers(String id) throws Exception {
+        List<CustomerAccount> customerAccounts = customerDao.selectAllCustomers(id);
+        List<CreateCustomerResponse> responses = new ArrayList<>();
+        customerAccounts.forEach(customerAccount -> {
+            responses.add(buildCreateCustomerResponse(customerAccount));
+        });
+        return responses;
     }
 
-    public String getCustomerById(String id){
+    public CreateCustomerResponse getCustomerById(String id) throws Exception{
+        CustomerAccount customerAccount = customerDao.selectCustomerById(id);
+        return buildCreateCustomerResponse(customerAccount);
+    }
+
+    public CustomerAccount getCustomerAccountById(String id) throws Exception{
         return customerDao.selectCustomerById(id);
     }
 
@@ -35,7 +50,23 @@ public class CustomerService {
         customerDao.deleteCustomer(id);
     }
 
-    public String updateCustomer(String id, Customer customer){
-        return customerDao.updateCustomer(id, customer);
+    private CreateCustomerResponse buildCreateCustomerResponse(CustomerAccount customerAccount) {
+        CreateCustomerResponse response = new CreateCustomerResponse();
+        response.setAccountId(customerAccount.getCustomerId());
+        return response;
+    }
+
+    public void updateCustomer(CustomerAccount customerAccount){
+        if (customerAccount != null
+                && StringUtils.isNotBlank(customerAccount.getFilingStatus())
+                && StringUtils.isNotBlank(customerAccount.getPhoneNumber())) {
+            customerDao.updateFilingStatusAndPhoneNumber(customerAccount);
+        } else if (customerAccount != null
+                && StringUtils.isNotBlank(customerAccount.getFilingStatus())) {
+            customerDao.updateFilingStatus(customerAccount);
+        } else if (customerAccount != null
+                && StringUtils.isNotBlank(customerAccount.getPhoneNumber())) {
+            customerDao.updatePhoneNumber(customerAccount);
+        }
     }
 }

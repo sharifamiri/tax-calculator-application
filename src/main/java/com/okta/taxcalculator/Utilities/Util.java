@@ -1,6 +1,6 @@
 package com.okta.taxcalculator.Utilities;
 
-import com.okta.taxcalculator.Entity.Customer;
+import com.okta.taxcalculator.Entity.CustomerAccount;
 
 public class Util {
 
@@ -8,7 +8,7 @@ public class Util {
 //        public DynamoDBMapper map = new DynamoDBMapper(cli);
 //        private static List<Customer> DB = new ArrayList<>();
 
-    public void insertCustomer(Customer customer) {
+    public void insertCustomer(CustomerAccount customerAccount) {
 //        1st WAY:
 //        Customer customer = new Customer();
 //        DB.add(new Customer(customer.getId(), customer.getName(), customer.getFilingStatus(), customer.getGrossIncome(), customer.getTaxAmount()));
