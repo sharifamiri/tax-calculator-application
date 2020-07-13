@@ -29,7 +29,7 @@ public class TaxService {
     private final TaxCalculationDao taxCalculationDao;
     private final CustomerService customerService;
 
-    public TaxService(@Qualifier("dynamodb")TaxCalculationDao taxCalculationDao, CustomerService customerService) {
+    public TaxService(@Qualifier("dynamodb2")TaxCalculationDao taxCalculationDao, CustomerService customerService) {
         this.taxCalculationDao = taxCalculationDao;
         this.customerService = customerService;
     }

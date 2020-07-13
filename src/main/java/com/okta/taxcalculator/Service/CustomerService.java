@@ -25,7 +25,7 @@ public class CustomerService {
     private CustomerDao customerDao;
 
     @Autowired
-    public CustomerService(@Qualifier("dynamodb") CustomerDao customerDao){
+    public CustomerService(@Qualifier("dynamodb1") CustomerDao customerDao){
         this.customerDao = customerDao;
     }
 

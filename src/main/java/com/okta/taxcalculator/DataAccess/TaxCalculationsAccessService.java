@@ -19,12 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@Repository("dynamodb")
+@Repository("dynamodb2")
 public class TaxCalculationsAccessService implements TaxCalculationDao {
 
     static AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().withRegion("us-west-2").build();
     static DynamoDB dynamoDB = new DynamoDB(client);
-    static String tableName = "TaxCalculations";
+    static String tableName = "TaxCalculation";
     static Table table = dynamoDB.getTable(tableName);
 
     @Override
