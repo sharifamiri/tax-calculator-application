@@ -106,7 +106,7 @@ public class CustomerDataAccessService implements CustomerDao {
 
         try {
             UpdateItemSpec updateItemSpec = new UpdateItemSpec().withPrimaryKey("customerId", customerAccount.getCustomerId())
-                    .withUpdateExpression("set #na1=:val1 and #na2=:val2")
+                    .withUpdateExpression("set #na1=:val1, #na2=:val2")
                     .withNameMap(new NameMap().with("#na1", "phoneNumber").with("#na2", "filingStatus"))
                     .withValueMap(
                             new ValueMap().withString(":val1", customerAccount.getPhoneNumber())

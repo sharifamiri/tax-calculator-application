@@ -5,6 +5,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,43 +20,4 @@ public class CustomerAccount {
     private String phoneNumber;
     private String filingStatus;
 
-    public String getFilingStatus() {
-        return filingStatus;
-    }
-
-    public void setFilingStatus(String filingStatus) {
-        this.filingStatus = filingStatus;
-    }
-
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
 }

@@ -7,6 +7,8 @@ import com.okta.taxcalculator.Enum.FilingStatus;
 import com.okta.taxcalculator.to.TaxCalculateRequest;
 import com.okta.taxcalculator.to.TaxCalculateResponse;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -14,8 +16,6 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 
 @Component
-@AllArgsConstructor
-@NoArgsConstructor
 public class TaxService {
 
     private double bracket1Rate = 0.10;
