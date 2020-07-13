@@ -3,9 +3,17 @@ package com.okta.taxcalculator.Entity;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @DynamoDBTable(tableName = "TaxAmountTable")
 public class Customer {
 
@@ -15,29 +23,16 @@ public class Customer {
     private Double grossIncome;
     private Double taxAmount;
 
-    public Customer() {
-    }
-
     @DynamoDBHashKey(attributeName = "id")
     public String getId() {
         id = ""+UUID.randomUUID();
         return id;
     }
 
-    @DynamoDBAttribute(attributeName = "name")
-    public String getName() {
-        return name;
-    }
-
-    @DynamoDBAttribute(attributeName = "filingStatus")
-    public String getFilingStatus() {
-        return filingStatus;
-    }
-
-    @DynamoDBAttribute(attributeName = "grossIncome")
-    public Double getGrossIncome() {
-        return Double.valueOf(Math.round(grossIncome));
-    }
+//    @DynamoDBAttribute(attributeName = "grossIncome")
+//    public Double getGrossIncome() {
+//        return Double.valueOf(Math.round(grossIncome));
+//    }
 
     @DynamoDBAttribute(attributeName = "taxAmount")
     public Double getTaxAmount(){

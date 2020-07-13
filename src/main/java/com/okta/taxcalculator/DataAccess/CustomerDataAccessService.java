@@ -14,9 +14,7 @@ import com.amazonaws.services.dynamodbv2.model.ScanResult;
 import com.okta.taxcalculator.Entity.Customer;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository("dynamodb")
 public class CustomerDataAccessService implements CustomerDao {
@@ -65,14 +63,15 @@ public class CustomerDataAccessService implements CustomerDao {
     }
 
     @Override
-    public String updateCustomer(Customer customer) {
+    public String updateCustomer(String id, Customer customer) {
 
         try {
-            UpdateItemSpec updateItemSpec = new UpdateItemSpec().withPrimaryKey("id", customer.getId())
-                    .withUpdateExpression("add #a :val1 set #na=:val2")
-                    .withNameMap(new NameMap().with("#a", "name").with("#na", "filingStatus"))
+            UpdateItemSpec updateItemSpec = new UpdateItemSpec().withPrimaryKey("id", id)
+                    .withUpdateExpression("set #na1=:val1, #na2=:val2")
+                    .withNameMap(new NameMap().with("#na1", "name").with("#na2", "filingStatus"))
                     .withValueMap(
-                            new ValueMap().withStringSet(":val1", customer.getName().toString()).withString(":val2", customer.getFilingStatus().toString()))
+                            new ValueMap().withString(":val1", customer.getName())
+                                    .withString(":val2", customer.getFilingStatus()))
                     .withReturnValues(ReturnValue.ALL_NEW);
 
             UpdateItemOutcome outcome = table.updateItem(updateItemSpec);

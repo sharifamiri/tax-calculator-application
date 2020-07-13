@@ -47,6 +47,6 @@ public class CustomerController {
 
     @PutMapping(path = "{id}")
     public String updateCustomer(@PathVariable("id") String id, @RequestBody Customer customer){
-        return customerService.updateCustomer(customer);
+        return customerService.updateCustomer(id, customer);
     }
 }
