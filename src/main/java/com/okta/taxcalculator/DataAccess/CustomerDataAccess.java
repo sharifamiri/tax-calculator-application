@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 
 @Repository("dynamodb")
-public class CustomerDataAccessService implements CustomerDao {
+public class CustomerDataAccess implements CustomerDao {
 
     static AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().withRegion("us-west-2").build();
     static DynamoDB dynamoDB = new DynamoDB(client);

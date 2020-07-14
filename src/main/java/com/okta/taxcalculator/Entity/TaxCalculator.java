@@ -2,7 +2,7 @@ package com.okta.taxcalculator.Entity;
 
 import java.util.HashMap;
 
-public class Calculator {
+public class TaxCalculator {
 
     private String filingStatus;
     private Double grossIncome;
@@ -25,7 +25,7 @@ public class Calculator {
     private int bracket6Amt = 214100;
     private int bracket7Amt = 510300;
 
-    public Calculator(String filingStatus, Double grossIncome) {
+    public TaxCalculator(String filingStatus, Double grossIncome) {
         this.filingStatus = filingStatus;
         this.grossIncome = grossIncome;
     }

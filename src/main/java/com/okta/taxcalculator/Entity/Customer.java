@@ -29,14 +29,9 @@ public class Customer {
         return id;
     }
 
-//    @DynamoDBAttribute(attributeName = "grossIncome")
-//    public Double getGrossIncome() {
-//        return Double.valueOf(Math.round(grossIncome));
-//    }
-
     @DynamoDBAttribute(attributeName = "taxAmount")
     public Double getTaxAmount(){
-        Calculator calculator = new Calculator(filingStatus, grossIncome);
+        TaxCalculator calculator = new TaxCalculator(filingStatus, grossIncome);
         taxAmount = calculator.taxAmountCalc();
         return Double.valueOf(Math.round(taxAmount));
     }

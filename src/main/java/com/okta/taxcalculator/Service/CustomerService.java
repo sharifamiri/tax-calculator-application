@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-//@DynamoDBTable(tableName = "TaxTable")
 public class CustomerService {
 
     private CustomerDao customerDao;
