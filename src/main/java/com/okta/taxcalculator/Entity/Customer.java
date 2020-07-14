@@ -14,26 +14,16 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@DynamoDBTable(tableName = "TaxAmountTable")
+@DynamoDBTable(tableName = "CustomerAccount")
 public class Customer {
 
-    private String id;
+    private String customerId;
     private String name;
     private String filingStatus;
-    private Double grossIncome;
-    private Double taxAmount;
 
-    @DynamoDBHashKey(attributeName = "id")
-    public String getId() {
-        id = ""+UUID.randomUUID();
-        return id;
+    @DynamoDBHashKey(attributeName = "customerId")
+    public String getCustomerId() {
+        customerId = ""+UUID.randomUUID();
+        return customerId;
     }
-
-    @DynamoDBAttribute(attributeName = "taxAmount")
-    public Double getTaxAmount(){
-        TaxCalculator calculator = new TaxCalculator(filingStatus, grossIncome);
-        taxAmount = calculator.taxAmountCalc();
-        return Double.valueOf(Math.round(taxAmount));
-    }
-
 }

@@ -1,4 +1,4 @@
-package com.okta.taxcalculator.Entity;
+package com.okta.taxcalculator.Utilities;
 
 import java.util.HashMap;
 

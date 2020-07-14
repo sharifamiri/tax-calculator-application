@@ -1,12 +1,13 @@
 package com.okta.taxcalculator.DataAccess;
 
 import com.okta.taxcalculator.Entity.Customer;
+import com.okta.taxcalculator.Entity.Tax;
 
 import java.util.List;
 
-public interface CustomerDao {
+public interface TaxDao {
 
-    String insertCustomer(Customer customer);
+    String insertTax(Tax tax);
 
     List<String> selectAllCustomers();
 
@@ -14,7 +15,5 @@ public interface CustomerDao {
 
     void deleteCustomer(String customerId);
 
-    String updateCustomerNameAndFilingStatus(String customerId, Customer customer);
-
-    String updateCustomerFilingStatus(String customerId, Customer customer);
+    String updateCustomer(String customerId, Customer customer);
 }

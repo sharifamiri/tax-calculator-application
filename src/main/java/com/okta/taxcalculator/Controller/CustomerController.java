@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 
-@RequestMapping("api/taxdata")
+@RequestMapping("api/customer")
 @RestController
 public class CustomerController {
 
@@ -27,26 +27,31 @@ public class CustomerController {
     @PostMapping
     public String  addCustomer(@Valid @NonNull @RequestBody Customer customer){
         return customerService.addCustomer(customer);
-//        mapper.save(customerService);
     }
 
     @GetMapping
-    public List<String> getAllCustomers(String id){
-        return customerService.getAllCustomers(id);
+    public List<String> getAllCustomers(){
+        return customerService.getAllCustomers();
     }
 
-    @GetMapping(path = "{id}")
-    public String getCustomerById(@PathVariable("id") String id){
-        return customerService.getCustomerById(id);
+    @GetMapping(path = "{customerId}")
+    public String getCustomerById(@PathVariable("customerId") String customerId){
+        return customerService.getCustomerById(customerId);
     }
 
-    @DeleteMapping(path = "{id}")
-    public void deleteCustomerById(@PathVariable("id") String id){
-        customerService.deleteCustomer(id);
+    @DeleteMapping(path = "{customerId}")
+    public void deleteCustomerById(@PathVariable("customerId") String customerId){
+        customerService.deleteCustomer(customerId);
     }
 
-    @PutMapping(path = "{id}")
-    public String updateCustomer(@PathVariable("id") String id, @RequestBody Customer customer){
-        return customerService.updateCustomer(id, customer);
+    @PutMapping(path = "{customerId}")
+    public String updateCustomerNameAndFilingStatus(@PathVariable("customerId") String customerId, @RequestBody Customer customer){
+        return customerService.updateCustomerNameAndFilingStatus(customerId, customer);
+    }
+
+    //localhost:8080/api/customer?customerId=137292c9-2681-4e3d-ab25-786f892d2033
+    @PutMapping
+    public String updateCustomerFilingStatus(@RequestParam(value="customerId") String customerId, @RequestBody Customer customer){
+        return customerService.updateCustomerFilingStatus(customerId, customer);
     }
 }

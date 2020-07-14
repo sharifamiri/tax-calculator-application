@@ -12,26 +12,36 @@ import com.amazonaws.services.dynamodbv2.model.ReturnValue;
 import com.amazonaws.services.dynamodbv2.model.ScanRequest;
 import com.amazonaws.services.dynamodbv2.model.ScanResult;
 import com.okta.taxcalculator.Entity.Customer;
+import com.okta.taxcalculator.Entity.Tax;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-@Repository("customer")
-public class CustomerDataAccess implements CustomerDao {
+@Repository("tax")
+public class TaxDataAccess implements TaxDao {
 
     static AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().withRegion("us-west-2").build();
     static DynamoDB dynamoDB = new DynamoDB(client);
-    static String tableName = "CustomerAccount";
-    static Table table = dynamoDB.getTable(tableName);
+    static String tableName = "TaxCalculation";
+    static Table taxTable = dynamoDB.getTable(tableName);
+
+    static Table customerTable = dynamoDB.getTable("CustomerAccount");
 
     @Override
-    public String insertCustomer(Customer customer) {
+    public String insertTax(Tax tax) {
 
-        Item item = new Item().withPrimaryKey("customerId",customer.getCustomerId())
-                .withString("name", customer.getName())
-                .withString("filingStatus", customer.getFilingStatus());
-        table.putItem(item);
-        return item.toJSONPretty();
+        Item item1 = customerTable.getItem("customerId", tax.getCustomerId());
+        String filingStatus = (String) item1.get("filingStatus");
+
+        Item item2 = new Item().withPrimaryKey("customerId", tax.getCustomerId())
+                .withString("filingStatus", filingStatus)
+                .withNumber("grossIncome", tax.getGrossIncome())
+                .withNumber("taxAmount", tax.getTaxAmount(filingStatus));
+        taxTable.putItem(item2);
+        return item2.toJSONPretty();
+
     }
 
     @Override
@@ -47,24 +57,24 @@ public class CustomerDataAccess implements CustomerDao {
     }
 
     @Override
-    public String selectCustomerById(String customerId) {
+    public String selectCustomerById(String id) {
 
-        Item item = table.getItem("customerId", customerId);
+        Item item = taxTable.getItem("id", id);
         return item.toJSONPretty();
     }
 
     @Override
-    public void deleteCustomer(String customerId) {
+    public void deleteCustomer(String id) {
 
-        DeleteItemSpec deleteItemSpec = new DeleteItemSpec().withPrimaryKey("customerId", customerId);
-        DeleteItemOutcome outcome = table.deleteItem(deleteItemSpec);
+        DeleteItemSpec deleteItemSpec = new DeleteItemSpec().withPrimaryKey("id", id);
+        DeleteItemOutcome outcome = taxTable.deleteItem(deleteItemSpec);
     }
 
     @Override
-    public String updateCustomerNameAndFilingStatus(String customerId, Customer customer) {
+    public String updateCustomer(String id, Customer customer) {
 
         try {
-            UpdateItemSpec updateItemSpec = new UpdateItemSpec().withPrimaryKey("customerId", customerId)
+            UpdateItemSpec updateItemSpec = new UpdateItemSpec().withPrimaryKey("id", id)
                     .withUpdateExpression("set #na1=:val1, #na2=:val2")
                     .withNameMap(new NameMap().with("#na1", "name").with("#na2", "filingStatus"))
                     .withValueMap(
@@ -72,25 +82,7 @@ public class CustomerDataAccess implements CustomerDao {
                                     .withString(":val2", customer.getFilingStatus()))
                     .withReturnValues(ReturnValue.ALL_NEW);
 
-            UpdateItemOutcome outcome = table.updateItem(updateItemSpec);
-            return outcome.getItem().toJSONPretty();
-        }catch (Exception e){
-            return e.getMessage();
-        }
-    }
-
-    @Override
-    public String updateCustomerFilingStatus(String customerId, Customer customer) {
-
-        try {
-            UpdateItemSpec updateItemSpec = new UpdateItemSpec().withPrimaryKey("customerId", customerId)
-                    .withUpdateExpression("set #na1=:val1")
-                    .withNameMap(new NameMap().with("#na1", "filingStatus"))
-                    .withValueMap(
-                            new ValueMap().withString(":val1", customer.getFilingStatus()))
-                    .withReturnValues(ReturnValue.ALL_NEW);
-
-            UpdateItemOutcome outcome = table.updateItem(updateItemSpec);
+            UpdateItemOutcome outcome = taxTable.updateItem(updateItemSpec);
             return outcome.getItem().toJSONPretty();
         }catch (Exception e){
             return e.getMessage();

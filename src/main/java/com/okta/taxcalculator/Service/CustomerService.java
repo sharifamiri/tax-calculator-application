@@ -14,7 +14,7 @@ public class CustomerService {
     private CustomerDao customerDao;
 
     @Autowired
-    public CustomerService(@Qualifier("dynamodb") CustomerDao customerDao){
+    public CustomerService(@Qualifier("customer") CustomerDao customerDao){
         this.customerDao = customerDao;
     }
 
@@ -22,19 +22,23 @@ public class CustomerService {
        return customerDao.insertCustomer(customer);
     }
 
-    public List<String> getAllCustomers(String id){
-        return customerDao.selectAllCustomers(id);
+    public List<String> getAllCustomers(){
+        return customerDao.selectAllCustomers();
     }
 
-    public String getCustomerById(String id){
-        return customerDao.selectCustomerById(id);
+    public String getCustomerById(String customerId){
+        return customerDao.selectCustomerById(customerId);
     }
 
-    public void deleteCustomer(String id){
-        customerDao.deleteCustomer(id);
+    public void deleteCustomer(String customerId){
+        customerDao.deleteCustomer(customerId);
     }
 
-    public String updateCustomer(String id, Customer customer){
-        return customerDao.updateCustomer(id, customer);
+    public String updateCustomerNameAndFilingStatus(String customerId, Customer customer){
+        return customerDao.updateCustomerNameAndFilingStatus(customerId, customer);
+    }
+
+    public String updateCustomerFilingStatus(String customerId, Customer customer){
+        return customerDao.updateCustomerFilingStatus(customerId, customer);
     }
 }
