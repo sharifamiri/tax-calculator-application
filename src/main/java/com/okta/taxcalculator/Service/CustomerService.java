@@ -26,12 +26,11 @@ public class CustomerService {
         return customerDao.selectAllCustomers();
     }
 
-    public String getCustomerById(String customerId){
-        return customerDao.selectCustomerById(customerId);
+    public String getCustomerByCustomerId(String customerId){ return customerDao.selectCustomerByCustomerId(customerId);
     }
 
-    public void deleteCustomer(String customerId){
-        customerDao.deleteCustomer(customerId);
+    public void deleteCustomerByCustomerId(String customerId){
+        customerDao.deleteCustomerByCustomerId(customerId);
     }
 
     public String updateCustomerNameAndFilingStatus(String customerId, Customer customer){

@@ -10,9 +10,9 @@ public interface CustomerDao {
 
     List<String> selectAllCustomers();
 
-    String selectCustomerById(String customerId);
+    String selectCustomerByCustomerId(String customerId);
 
-    void deleteCustomer(String customerId);
+    void deleteCustomerByCustomerId(String customerId);
 
     String updateCustomerNameAndFilingStatus(String customerId, Customer customer);
 

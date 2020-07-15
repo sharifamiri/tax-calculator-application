@@ -35,13 +35,13 @@ public class CustomerController {
     }
 
     @GetMapping(path = "{customerId}")
-    public String getCustomerById(@PathVariable("customerId") String customerId){
-        return customerService.getCustomerById(customerId);
+    public String getCustomerByCustomerId(@PathVariable("customerId") String customerId){
+        return customerService.getCustomerByCustomerId(customerId);
     }
 
     @DeleteMapping(path = "{customerId}")
-    public void deleteCustomerById(@PathVariable("customerId") String customerId){
-        customerService.deleteCustomer(customerId);
+    public void deleteCustomerByCustomerId(@PathVariable("customerId") String customerId){
+        customerService.deleteCustomerByCustomerId(customerId);
     }
 
     @PutMapping(path = "{customerId}")

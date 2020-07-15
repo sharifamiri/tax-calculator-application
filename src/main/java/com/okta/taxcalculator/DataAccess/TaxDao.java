@@ -9,11 +9,11 @@ public interface TaxDao {
 
     String insertTax(Tax tax);
 
-    List<String> selectAllCustomers();
+    List<String> selectAllTaxes();
 
-    String selectCustomerById(String customerId);
+    String selectTaxByCustomerId(String customerId);
 
-    void deleteCustomer(String customerId);
+    void deleteTaxByCustomerId(String customerId);
 
-    String updateCustomer(String customerId, Customer customer);
+    String updateGrossIncome(String customerId, Tax tax);
 }

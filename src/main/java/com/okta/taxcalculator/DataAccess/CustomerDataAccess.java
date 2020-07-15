@@ -47,14 +47,14 @@ public class CustomerDataAccess implements CustomerDao {
     }
 
     @Override
-    public String selectCustomerById(String customerId) {
+    public String selectCustomerByCustomerId(String customerId) {
 
         Item item = table.getItem("customerId", customerId);
         return item.toJSONPretty();
     }
 
     @Override
-    public void deleteCustomer(String customerId) {
+    public void deleteCustomerByCustomerId(String customerId) {
 
         DeleteItemSpec deleteItemSpec = new DeleteItemSpec().withPrimaryKey("customerId", customerId);
         DeleteItemOutcome outcome = table.deleteItem(deleteItemSpec);

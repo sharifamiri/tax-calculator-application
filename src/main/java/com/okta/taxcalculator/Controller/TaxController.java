@@ -29,22 +29,22 @@ public class TaxController {
     }
 
     @GetMapping
-    public List<String> getAllCustomers(){
-        return taxService.getAllCustomers();
+    public List<String> getAllTaxes(){
+        return taxService.getAllTaxes();
     }
 
     @GetMapping(path = "{customerId}")
-    public String getCustomerById(@PathVariable("customerId") String customerId){
-        return taxService.getCustomerById(customerId);
+    public String getTaxByCustomerId(@PathVariable("customerId") String customerId){
+        return taxService.getTaxByCustomerId(customerId);
     }
 
     @DeleteMapping(path = "{customerId}")
-    public void deleteCustomerById(@PathVariable("customerId") String customerId){
-        taxService.deleteCustomer(customerId);
+    public void deleteTaxByCustomerId(@PathVariable("customerId") String customerId){
+        taxService.deleteTaxByCustomerId(customerId);
     }
 
     @PutMapping(path = "{customerId}")
-    public String updateCustomer(@PathVariable("customerId") String customerId, @RequestBody Customer customer){
-        return taxService.updateCustomer(customerId, customer);
+    public String updateGrossIncome(@PathVariable("customerId") String customerId, @RequestBody Tax tax){
+        return taxService.updateGrossIncome(customerId, tax);
     }
 }

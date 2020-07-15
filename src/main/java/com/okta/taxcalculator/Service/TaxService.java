@@ -23,19 +23,19 @@ public class TaxService {
        return taxDao.insertTax(tax);
     }
 
-    public List<String> getAllCustomers(){
-        return taxDao.selectAllCustomers();
+    public List<String> getAllTaxes(){
+        return taxDao.selectAllTaxes();
     }
 
-    public String getCustomerById(String customerId){
-        return taxDao.selectCustomerById(customerId);
+    public String getTaxByCustomerId(String customerId){
+        return taxDao.selectTaxByCustomerId(customerId);
     }
 
-    public void deleteCustomer(String customerId){
-        taxDao.deleteCustomer(customerId);
+    public void deleteTaxByCustomerId(String customerId){
+        taxDao.deleteTaxByCustomerId(customerId);
     }
 
-    public String updateCustomer(String customerId, Customer customer){
-        return taxDao.updateCustomer(customerId, customer);
+    public String updateGrossIncome(String customerId, Tax tax){
+        return taxDao.updateGrossIncome(customerId, tax);
     }
 }

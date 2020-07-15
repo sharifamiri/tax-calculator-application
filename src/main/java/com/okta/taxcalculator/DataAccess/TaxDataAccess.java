@@ -45,41 +45,40 @@ public class TaxDataAccess implements TaxDao {
     }
 
     @Override
-    public List<String> selectAllCustomers() {
+    public List<String> selectAllTaxes() {
 
         ScanRequest scanRequest = new ScanRequest().withTableName(tableName);
         ScanResult result = client.scan(scanRequest);
-        List<String> listOfCustomers = new ArrayList<>();
+        List<String> listOfTaxes = new ArrayList<>();
         for (Map<String, AttributeValue> item : result.getItems()){
-            listOfCustomers.add(item.toString());
+            listOfTaxes.add(item.toString());
         }
-        return listOfCustomers;
+        return listOfTaxes;
     }
 
     @Override
-    public String selectCustomerById(String id) {
+    public String selectTaxByCustomerId(String customerId) {
 
-        Item item = taxTable.getItem("id", id);
+        Item item = taxTable.getItem("customerId", customerId);
         return item.toJSONPretty();
     }
 
     @Override
-    public void deleteCustomer(String id) {
+    public void deleteTaxByCustomerId(String customerId) {
 
-        DeleteItemSpec deleteItemSpec = new DeleteItemSpec().withPrimaryKey("id", id);
+        DeleteItemSpec deleteItemSpec = new DeleteItemSpec().withPrimaryKey("customerId", customerId);
         DeleteItemOutcome outcome = taxTable.deleteItem(deleteItemSpec);
     }
 
     @Override
-    public String updateCustomer(String id, Customer customer) {
+    public String updateGrossIncome(String customerId, Tax tax) {
 
         try {
-            UpdateItemSpec updateItemSpec = new UpdateItemSpec().withPrimaryKey("id", id)
-                    .withUpdateExpression("set #na1=:val1, #na2=:val2")
-                    .withNameMap(new NameMap().with("#na1", "name").with("#na2", "filingStatus"))
+            UpdateItemSpec updateItemSpec = new UpdateItemSpec().withPrimaryKey("customerId", customerId)
+                    .withUpdateExpression("set #na1=:val1")
+                    .withNameMap(new NameMap().with("#na1", "grossIncome"))
                     .withValueMap(
-                            new ValueMap().withString(":val1", customer.getName())
-                                    .withString(":val2", customer.getFilingStatus()))
+                            new ValueMap().withNumber(":val1", tax.getGrossIncome()))
                     .withReturnValues(ReturnValue.ALL_NEW);
 
             UpdateItemOutcome outcome = taxTable.updateItem(updateItemSpec);
