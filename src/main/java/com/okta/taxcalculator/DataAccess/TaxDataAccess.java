@@ -73,12 +73,15 @@ public class TaxDataAccess implements TaxDao {
     @Override
     public String updateGrossIncome(String customerId, Tax tax) {
 
+        Item item = taxTable.getItem("customerId", customerId);
+        String filingStatus = (String) item.get("filingStatus");
         try {
             UpdateItemSpec updateItemSpec = new UpdateItemSpec().withPrimaryKey("customerId", customerId)
-                    .withUpdateExpression("set #na1=:val1")
-                    .withNameMap(new NameMap().with("#na1", "grossIncome"))
+                    .withUpdateExpression("set #na1=:val1, #na2=:val2")
+                    .withNameMap(new NameMap().with("#na1", "grossIncome").with("#na2", "taxAmount"))
                     .withValueMap(
-                            new ValueMap().withNumber(":val1", tax.getGrossIncome()))
+                            new ValueMap().withNumber(":val1", tax.getGrossIncome())
+                                          .withNumber(":val2", tax.getTaxAmount(filingStatus)))
                     .withReturnValues(ReturnValue.ALL_NEW);
 
             UpdateItemOutcome outcome = taxTable.updateItem(updateItemSpec);
