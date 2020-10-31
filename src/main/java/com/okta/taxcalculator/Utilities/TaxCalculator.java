@@ -32,13 +32,13 @@ public class TaxCalculator {
 
     public Double taxAmountCalc(){
 
-        if(filingStatus.equals("Single")) {
+        if(filingStatus.equals(Status.SINGLE.toString())) {
 
             Integer singleStandardDeduction = 12200;
             if(grossIncome < singleStandardDeduction) return 0.0;
             taxableIncome = grossIncome - singleStandardDeduction;
 
-        }else if (filingStatus.equals("Married")) {
+        }else if (filingStatus.equals(Status.MARRIED.toString())) {
             int marriedStandardDeduction = 19400;
             if(grossIncome < marriedStandardDeduction) return 0.0;
             taxableIncome = grossIncome - marriedStandardDeduction;

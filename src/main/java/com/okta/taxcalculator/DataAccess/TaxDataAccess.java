@@ -38,7 +38,7 @@ public class TaxDataAccess implements TaxDao {
         Item item2 = new Item().withPrimaryKey("customerId", tax.getCustomerId())
                 .withString("filingStatus", filingStatus)
                 .withNumber("grossIncome", tax.getGrossIncome())
-                .withNumber("taxAmount", tax.getTaxAmount(filingStatus));
+                .withNumber("taxAmount", tax.getTaxAmount(filingStatus.toUpperCase()));
         taxTable.putItem(item2);
         return item2.toJSONPretty();
 
