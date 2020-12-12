@@ -1,12 +1,12 @@
 package com.okta.taxcalculator.enums;
 
-public enum Gender {
+public enum Status {
 
-    MALE("Male"),FEMALE("Female");
+    SINGLE("Single"), MARRIED("Married");
 
     private final String value;
 
-    Gender(String value) {
+    Status(String value) {
         this.value = value;
     }
 

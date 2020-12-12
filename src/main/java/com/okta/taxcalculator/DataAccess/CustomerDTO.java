@@ -1,7 +1,7 @@
 package com.okta.taxcalculator.DataAccess;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
-import com.okta.taxcalculator.enums.Gender;
+import com.okta.taxcalculator.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +20,7 @@ public class CustomerDTO {
     private String customerId;
     private String firstName;
     private String lastName;
-    private Gender filingStatus;
+    private Status filingStatus;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate createDate;
 

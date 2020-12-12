@@ -1,6 +1,6 @@
 package com.okta.taxcalculator.Utilities;
 
-import java.util.HashMap;
+import com.okta.taxcalculator.enums.Status;
 
 public class TaxCalculator {
 
@@ -32,13 +32,12 @@ public class TaxCalculator {
 
     public Double taxAmountCalc(){
 
-        if(filingStatus.equals(Status.SINGLE.toString())) {
-
+        if(filingStatus.equals(Status.SINGLE.getValue())) {
             Integer singleStandardDeduction = 12200;
             if(grossIncome < singleStandardDeduction) return 0.0;
             taxableIncome = grossIncome - singleStandardDeduction;
 
-        }else if (filingStatus.equals(Status.MARRIED.toString())) {
+        }else if (filingStatus.equals(Status.MARRIED.getValue())) {
             int marriedStandardDeduction = 19400;
             if(grossIncome < marriedStandardDeduction) return 0.0;
             taxableIncome = grossIncome - marriedStandardDeduction;

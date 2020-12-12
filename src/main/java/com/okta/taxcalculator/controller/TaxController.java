@@ -1,11 +1,9 @@
 package com.okta.taxcalculator.controller;
 
-import com.okta.taxcalculator.DataAccess.CustomerDTO;
 import com.okta.taxcalculator.DataAccess.TaxDTO;
 import com.okta.taxcalculator.Service.CustomerService;
 import com.okta.taxcalculator.Service.TaxService;
 import com.okta.taxcalculator.Utilities.TaxCalculator;
-import com.okta.taxcalculator.enums.Gender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/tax")
@@ -29,22 +25,18 @@ public class TaxController {
     public String createTax( String id, TaxDTO tax, Model model){
         model.addAttribute("tax", new TaxDTO());
         model.addAttribute("customers", customerService.findAll());
-
-        System.out.println("FOUND: " + customerService.findAll());
         model.addAttribute("taxes", taxService.findAll());
         return "/tax/create";
     }
 
     @PostMapping("/create")
-    public String insertTax(String id, TaxDTO tax){
+    public String insertTax(Double income,TaxDTO tax){
 
-//        tax.setCustomerName(customerService.findById(id).getFirstName() + " " + customerService.findById(id).getLastName());
-//        tax.setFilingStatus(customerService.findById(id).getFilingStatus());
-//        TaxCalculator taxCalculator = new TaxCalculator(customerService.findById(id).getFilingStatus().getValue(),tax.getGrossIncome());
-//        tax.setTaxAmount(tax.getTaxAmount(taxCalculator));
+        tax.setFilingStatus(customerService.findById(tax.getCustomerID()).getFilingStatus());
+        tax.setCustomerName(customerService.findById(tax.getCustomerID()).getFirstName()+' '+customerService.findById(tax.getCustomerID()).getLastName());
 
-        tax.setFilingStatus(Gender.MALE);
-        tax.setTaxAmount(2000.00);
+        TaxCalculator taxCalculator = new TaxCalculator(customerService.findById(tax.getCustomerID()).getFilingStatus().getValue(), tax.getGrossIncome());
+        tax.setTaxAmount(taxCalculator.taxAmountCalc());
         taxService.save(tax);
         return "redirect:/tax/create";
     }

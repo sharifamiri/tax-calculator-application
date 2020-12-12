@@ -37,9 +37,9 @@
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label>Customer</label>
-                                                    <select th:field="*{customerName}"class="custom-select" required="required">
+                                                    <select th:field="*{customerID}"class="custom-select" required="required">
                                                         <option th:value=" ''" th:text="Select"></option>
-                                                        <option th:each="customer : ${customers}" th:value="${customer.firstName + ' ' + customer.lastName}"
+                                                        <option th:each="customer : ${customers}" th:value="${customer.customerId}"
                                                                 th:text="${customer.firstName + ' ' + customer.lastName + ' - ' + customer.customerId}"></option>
                                                     </select>
                                                     <div class="invalid-feedback">Please choose customer.</div>
